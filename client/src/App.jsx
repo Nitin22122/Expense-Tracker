@@ -265,7 +265,8 @@ const balance = totalIncome - totalExpense;
 
           <p><strong>Type:</strong> {item.type}</p>
 
-          <p><strong>Date:</strong> {item.date}</p>
+          <p><strong>Date:</strong>{" "}{new Date(item.date).toLocaleDateString()}</p>
+          <p><strong>Time:</strong>{" "}{new Date(item.createdAt).toLocaleTimeString()}</p>
 
           <button
             onClick={() => deleteTransaction(item._id)}
