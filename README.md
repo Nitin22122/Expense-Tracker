@@ -1,29 +1,79 @@
-# MERN Expense Tracker
+# Expense Tracker
 
-A full stack MERN Expense Tracker application built for Open Innovations Labs Internship Task.
+A modern full stack MERN Expense Tracker application built using React.js, Node.js, Express.js, and MongoDB Atlas.
 
-## Features
+---
 
-- Add transactions
-- Delete transactions
-- Income & Expense tracking
-- Dashboard calculations
-- Search transactions
-- Filter transactions
-- MongoDB Atlas integration
-- REST API
-- Responsive UI
+# Features
 
-## Tech Stack
+✅ Add Transactions  
+✅ Edit Transactions  
+✅ Delete Transactions  
+✅ Income & Expense Tracking  
+✅ Dashboard Analytics  
+✅ Search Transactions  
+✅ Filter Transactions  
+✅ Form Validation  
+✅ Responsive Modern UI  
+✅ MongoDB Atlas Integration  
+✅ REST API Architecture  
 
+---
+
+# Tech Stack
+
+## Frontend
 - React.js
+- Axios
+- CSS
+
+## Backend
 - Node.js
 - Express.js
+
+## Database
 - MongoDB Atlas
+- Mongoose
 
-## Installation
+---
 
-### Frontend
+# Project Structure
+
+```txt
+Expense_Tracker/
+
+├── client/
+│   ├── src/
+│   ├── public/
+│   └── package.json
+│
+├── server/
+│   ├── models/
+│   ├── routes/
+│   ├── .env.example
+│   ├── package.json
+│   └── server.js
+│
+├── screenshots/
+├── README.md
+└── .gitignore
+```
+
+---
+
+# Installation & Setup
+
+## 1. Clone Repository
+
+```bash
+git clone https://github.com/Nitin22122/Expense-Tracker.git
+```
+
+---
+
+## 2. Frontend Setup
+
+Open terminal:
 
 ```bash
 cd client
@@ -31,33 +81,140 @@ npm install
 npm run dev
 ```
 
-### Backend
+Frontend runs on:
+
+```txt
+http://localhost:5173
+```
+
+---
+
+## 3. Backend Setup
+
+Open another terminal:
 
 ```bash
 cd server
 npm install
+```
+
+Create `.env` file inside server folder:
+
+```env
+MONGO_URI=your_mongodb_connection_string
+```
+
+Run backend server:
+
+```bash
 node server.js
 ```
 
-## Environment Variables
+Backend runs on:
 
-Create `.env` inside server folder:
-
-```env
-MONGO_URI=your_mongodb_url
+```txt
+http://localhost:5000
 ```
 
-## API Routes
+---
 
+# API Routes
+
+## Get All Transactions
+
+```http
 GET /api/transactions
+```
 
+---
+
+## Add Transaction
+
+```http
 POST /api/transactions
+```
 
+---
+
+## Update Transaction
+
+```http
 PUT /api/transactions/:id
+```
 
+---
+
+## Delete Transaction
+
+```http
 DELETE /api/transactions/:id
+```
 
-## AI Usage
+---
 
-AI tools were used for debugging, learning, and UI improvements.
-All code was understood and modified manually.
+# Validation Features
+
+The application prevents:
+- Empty titles
+- Missing dates
+- Invalid amounts
+
+This improves data accuracy and user experience.
+
+---
+
+# Dashboard Features
+
+The dashboard calculates:
+- Total Income
+- Total Expense
+- Remaining Balance
+
+using dynamic React state and array methods.
+
+---
+
+# Screenshots
+
+## Dashboard
+
+![Dashboard](screenshots/dashboard.png)
+
+---
+
+## Add Transaction Form
+
+![Add Form](screenshots/add-form.png)
+
+---
+
+## Transactions List
+
+![Transactions](screenshots/transactions.png)
+
+---
+
+# Future Improvements
+
+- Dark Mode
+- Authentication System
+- Expense Categories
+- Charts & Analytics
+- Export Reports (PDF/CSV)
+- Monthly Reports
+- Toast Notifications
+
+---
+
+# Author
+
+Nitin Ola
+
+GitHub:
+https://github.com/Nitin22122
+
+---
+
+# License
+
+This project is for educational and internship purposes.
