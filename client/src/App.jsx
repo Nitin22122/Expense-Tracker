@@ -6,7 +6,7 @@ import {
   Cell,
   Tooltip,
   Legend,
-  ResponsiveContainer,
+ ResponsiveContainer,
 } from "recharts";
 
 function App() {
@@ -14,9 +14,17 @@ function App() {
 
   const [transactions, setTransactions] = useState([]);
   const [search, setSearch] = useState("");
-  const [filter, setFilter] = useState("all");
   const [editId, setEditId] = useState(null);
   const [showModal, setShowModal] = useState(false);
+
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    amount: "",
+    type: "expense",
+    category: "Food",
+    date: "",
+  });
 
   const totalIncome = transactions
     .filter((item) => item.type === "income")
@@ -40,15 +48,6 @@ function App() {
   ];
 
   const COLORS = ["#28a745", "#dc3545"];
-
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    amount: "",
-    type: "expense",
-    category: "Food",
-    date: "",
-  });
 
   // FETCH TRANSACTIONS
   const fetchTransactions = async () => {
@@ -83,7 +82,7 @@ function App() {
     }
   };
 
-  // UPDATE TRANSACTION
+  // EDIT TRANSACTION
   const editTransaction = (item) => {
     setFormData({
       title: item.title,
@@ -166,91 +165,86 @@ function App() {
           </div>
         </div>
 
-        {/* Form */}
+        {/* Add Transaction Form */}
         {!showModal && (
-        
-        <form
-          onSubmit={handleSubmit}
-          className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 shadow-xl mb-10 space-y-4"
-        >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input
-              type="text"
-              name="title"
-              placeholder="Title"
-              value={formData.title}
-              onChange={handleChange}
-              className="p-3 rounded-xl bg-white/10 border border-white/20 outline-none"
-            />
-
-            <input
-              type="number"
-              name="amount"
-              placeholder="Amount"
-              value={formData.amount}
-              onChange={handleChange}
-              className="p-3 rounded-xl bg-white/10 border border-white/20 outline-none"
-            />
-          </div>
-
-          <textarea
-            name="description"
-            placeholder="Description"
-            value={formData.description}
-            onChange={handleChange}
-            className="w-full p-3 rounded-xl bg-white/10 border border-white/20 outline-none"
-          />
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <select
-              name="type"
-              value={formData.type}
-              onChange={handleChange}
-              className="p-3 rounded-xl bg-slate-800 border border-white/20"
-            >
-              <option value="income">Income</option>
-              <option value="expense">Expense</option>
-            </select>
-
-            <select
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-              className="p-3 rounded-xl bg-slate-800 border border-white/20"
-            >
-              <option value="Food">Food</option>
-              <option value="Rent">Rent</option>
-              <option value="Salary">Salary</option>
-              <option value="Travel">Travel</option>
-              <option value="Shopping">Shopping</option>
-            </select>
-
-            <input
-              type="date"
-              name="date"
-              value={formData.date}
-              onChange={handleChange}
-              className="p-3 rounded-xl bg-white/10 border border-white/20"
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="w-full bg-purple-600 hover:bg-purple-700 transition-all p-3 rounded-xl font-semibold"
+          <form
+            onSubmit={handleSubmit}
+            className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 shadow-xl mb-10 space-y-4"
           >
-            {editId ? "Update Transaction" : "Add Transaction"}
-          </button>
-        </form>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input
+                type="text"
+                name="title"
+                placeholder="Title"
+                value={formData.title}
+                onChange={handleChange}
+                className="p-3 rounded-xl bg-white/10 border border-white/20 outline-none"
+              />
+
+              <input
+                type="number"
+                name="amount"
+                placeholder="Amount"
+                value={formData.amount}
+                onChange={handleChange}
+                className="p-3 rounded-xl bg-white/10 border border-white/20 outline-none"
+              />
+            </div>
+
+            <textarea
+              name="description"
+              placeholder="Description"
+              value={formData.description}
+              onChange={handleChange}
+              className="w-full p-3 rounded-xl bg-white/10 border border-white/20 outline-none"
+            />
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <select
+                name="type"
+                value={formData.type}
+                onChange={handleChange}
+                className="p-3 rounded-xl bg-slate-800 border border-white/20"
+              >
+                <option value="income">Income</option>
+                <option value="expense">Expense</option>
+              </select>
+
+              <select
+                name="category"
+                value={formData.category}
+                onChange={handleChange}
+                className="p-3 rounded-xl bg-slate-800 border border-white/20"
+              >
+                <option value="Food">Food</option>
+                <option value="Rent">Rent</option>
+                <option value="Salary">Salary</option>
+                <option value="Travel">Travel</option>
+                <option value="Shopping">Shopping</option>
+              </select>
+
+              <input
+                type="date"
+                name="date"
+                value={formData.date}
+                onChange={handleChange}
+                className="p-3 rounded-xl bg-white/10 border border-white/20"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-purple-600 hover:bg-purple-700 transition-all p-3 rounded-xl font-semibold"
+            >
+              Add Transaction
+            </button>
+          </form>
         )}
 
         {/* Edit Modal */}
-
         {showModal && (
-
           <div className="fixed inset-0 bg-black/60 flex justify-center items-center z-50">
-
             <div className="bg-slate-900 p-8 rounded-2xl w-[90%] md:w-[500px] shadow-2xl border border-white/10">
-
               <h2 className="text-3xl font-bold mb-6 text-center">
                 Edit Transaction
               </h2>
@@ -259,7 +253,6 @@ function App() {
                 onSubmit={handleSubmit}
                 className="space-y-4"
               >
-
                 <input
                   type="text"
                   name="title"
@@ -292,11 +285,8 @@ function App() {
                   onChange={handleChange}
                   className="w-full p-3 rounded-xl bg-slate-800 border border-white/20"
                 >
-
                   <option value="income">Income</option>
-
                   <option value="expense">Expense</option>
-
                 </select>
 
                 <select
@@ -305,13 +295,11 @@ function App() {
                   onChange={handleChange}
                   className="w-full p-3 rounded-xl bg-slate-800 border border-white/20"
                 >
-
                   <option value="Food">Food</option>
                   <option value="Rent">Rent</option>
                   <option value="Salary">Salary</option>
                   <option value="Travel">Travel</option>
                   <option value="Shopping">Shopping</option>
-
                 </select>
 
                 <input
@@ -323,7 +311,6 @@ function App() {
                 />
 
                 <div className="flex gap-4">
-
                   <button
                     type="submit"
                     className="flex-1 bg-blue-600 hover:bg-blue-700 p-3 rounded-xl"
@@ -332,36 +319,28 @@ function App() {
                   </button>
 
                   <button
-                  type="button"
-                  onClick={() => {
+                    type="button"
+                    onClick={() => {
+                      setShowModal(false);
+                      setEditId(null);
 
-                    setShowModal(false);
-
-                    setEditId(null);
-
-                    setFormData({
-                      title: "",
-                      description: "",
-                      amount: "",
-                      type: "expense",
-                      category: "Food",
-                      date: ""
-                    });
-
-                  }}
-                  className="flex-1 bg-red-600 hover:bg-red-700 p-3 rounded-xl"
-                >
-                  Cancel
-                </button>
-
+                      setFormData({
+                        title: "",
+                        description: "",
+                        amount: "",
+                        type: "expense",
+                        category: "Food",
+                        date: "",
+                      });
+                    }}
+                    className="flex-1 bg-red-600 hover:bg-red-700 p-3 rounded-xl"
+                  >
+                    Cancel
+                  </button>
                 </div>
-
               </form>
-
             </div>
-
           </div>
-
         )}
 
         {/* Search */}
@@ -373,7 +352,7 @@ function App() {
           className="w-full p-3 rounded-xl bg-white/10 border border-white/20 outline-none mb-8"
         />
 
-        {/* Analytics Chart */}
+        {/* Analytics */}
         <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 shadow-lg border border-white/10 mb-10">
           <h2 className="text-3xl font-bold text-center mb-6">
             Expense Analytics
