@@ -1,45 +1,64 @@
-# Expense Tracker
+# Expense Tracker 💰
 
-A modern full stack MERN Expense Tracker application built using React.js, Node.js, Express.js, and MongoDB Atlas.
+A modern full-stack MERN Expense Tracker application with analytics dashboard, category management, charts, popup editing, and responsive UI.
 
 ---
 
-# Features
+## 🚀 Features
 
 ✅ Add Transactions  
-✅ Edit Transactions  
+✅ Edit Transactions (Popup Modal)  
 ✅ Delete Transactions  
 ✅ Income & Expense Tracking  
-✅ Dashboard Analytics  
+✅ Smart Dashboard Cards  
+✅ Monthly Expense Analytics  
+✅ Pie Chart Analytics  
+✅ Category System  
 ✅ Search Transactions  
-✅ Filter Transactions  
-✅ Form Validation  
 ✅ Responsive Modern UI  
 ✅ MongoDB Atlas Integration  
 ✅ REST API Architecture  
+✅ Full CRUD Operations  
 
 ---
 
-# Tech Stack
+## 🛠 Tech Stack
 
-## Frontend
+### Frontend
 - React.js
 - Axios
-- CSS
+- Tailwind CSS
+- Recharts
 
-## Backend
+### Backend
 - Node.js
 - Express.js
 
-## Database
+### Database
 - MongoDB Atlas
 - Mongoose
 
 ---
 
-# Project Structure
+## 📸 Screenshots
 
-```txt
+### Dashboard
+![Dashboard](./screenshots/dashboard.png)
+
+### Add Transaction
+![Add Form](./screenshots/add-form.png)
+
+### Analytics
+![Analytics](./screenshots/analytics.png)
+
+### Transactions
+![Transactions](./screenshots/transactions.png)
+
+---
+
+## 📂 Project Structure
+
+```bash
 Expense_Tracker/
 
 ├── client/
@@ -50,8 +69,7 @@ Expense_Tracker/
 ├── server/
 │   ├── models/
 │   ├── routes/
-│   ├── .env.example
-│   ├── package.json
+│   ├── .env
 │   └── server.js
 │
 ├── screenshots/
@@ -61,9 +79,9 @@ Expense_Tracker/
 
 ---
 
-# Installation & Setup
+# ⚙️ Installation & Setup
 
-## 1. Clone Repository
+## 1️⃣ Clone Repository
 
 ```bash
 git clone https://github.com/Nitin22122/Expense-Tracker.git
@@ -71,150 +89,148 @@ git clone https://github.com/Nitin22122/Expense-Tracker.git
 
 ---
 
-## 2. Frontend Setup
-
-Open terminal:
+## 2️⃣ Open Project Folder
 
 ```bash
-cd client
-npm install
-npm run dev
-```
-
-Frontend runs on:
-
-```txt
-http://localhost:5173
+cd Expense-Tracker
 ```
 
 ---
 
-## 3. Backend Setup
+# 🔹 Backend Setup
 
-Open another terminal:
+## 3️⃣ Go To Server Folder
 
 ```bash
 cd server
+```
+
+---
+
+## 4️⃣ Install Backend Dependencies
+
+```bash
 npm install
 ```
 
-Create `.env` file inside server folder:
+---
+
+## 5️⃣ Create `.env` File
+
+Inside `server` folder create:
 
 ```env
 MONGO_URI=your_mongodb_connection_string
 ```
 
-Run backend server:
+---
+
+## 6️⃣ Start Backend Server
 
 ```bash
 node server.js
 ```
 
-Backend runs on:
+Server runs on:
 
-```txt
+```bash
 http://localhost:5000
 ```
 
 ---
 
-# API Routes
+# 🔹 Frontend Setup
 
-## Get All Transactions
+## 7️⃣ Open New Terminal
 
-```http
-GET /api/transactions
+Go to client folder:
+
+```bash
+cd client
 ```
 
 ---
 
-## Add Transaction
+## 8️⃣ Install Frontend Dependencies
 
-```http
-POST /api/transactions
+```bash
+npm install
 ```
 
 ---
 
-## Update Transaction
+## 9️⃣ Start React App
 
-```http
-PUT /api/transactions/:id
+```bash
+npm run dev
+```
+
+Frontend runs on:
+
+```bash
+http://localhost:5173
 ```
 
 ---
 
-## Delete Transaction
+# 📊 Smart Dashboard Features
 
-```http
-DELETE /api/transactions/:id
-```
-
----
-
-# Validation Features
-
-The application prevents:
-- Empty titles
-- Missing dates
-- Invalid amounts
-
-This improves data accuracy and user experience.
-
----
-
-# Dashboard Features
-
-The dashboard calculates:
 - Total Income
 - Total Expense
-- Remaining Balance
-
-using dynamic React state and array methods.
-
----
-
-# Screenshots
-
-## Dashboard
-
-![Dashboard](screenshots/dashboard.png)
+- Current Balance
+- Highest Expense
+- Latest Transaction
+- Total Transactions
 
 ---
 
-## Add Transaction Form
+# 📈 Analytics
 
-![Add Form](screenshots/add-form.png)
+## Pie Chart
+Shows:
+- Income vs Expense
+
+## Monthly Expense Analytics
+Shows:
+- Month-wise expense trends
 
 ---
 
-## Transactions List
+# 🏷 Categories
 
-![Transactions](screenshots/transactions.png)
+Supported categories:
+- Food
+- Rent
+- Salary
+- Travel
+- Shopping
 
 ---
 
-# Future Improvements
+# ✨ UI Features
 
-- Dark Mode
+- Glassmorphism Design
+- Gradient Background
+- Popup Edit Modal
+- Responsive Layout
+- Modern Dashboard Cards
+- Hover Effects
+- Search Functionality
+
+---
+
+# 🌍 Future Improvements
+
 - Authentication System
-- Expense Categories
-- Charts & Analytics
-- Export Reports (PDF/CSV)
-- Monthly Reports
-- Toast Notifications
+- Dark Mode
+- PDF Export
+- AI Expense Insights
+- Recurring Transactions
+- User Profiles
 
----
+# 👨‍💻 Author
 
-# Author
-
-Nitin Ola
+### Nitin Ola
 
 GitHub:
 https://github.com/Nitin22122
-
----
-
-# License
-
-This project is for educational and internship purposes.
