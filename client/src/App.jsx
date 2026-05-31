@@ -6,7 +6,12 @@ import {
   Cell,
   Tooltip,
   Legend,
- ResponsiveContainer,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid
 } from "recharts";
 
 function App() {
@@ -14,6 +19,7 @@ function App() {
 
   const [transactions, setTransactions] = useState([]);
   const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState("all");
   const [editId, setEditId] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
@@ -35,6 +41,23 @@ function App() {
     .reduce((acc, item) => acc + Number(item.amount), 0);
 
   const balance = totalIncome - totalExpense;
+
+  const savingsRate =
+    totalIncome > 0
+      ? ((balance / totalIncome) * 100).toFixed(1)
+      : 0;
+
+  const highestExpense = transactions
+    .filter((item) => item.type === "expense")
+    .reduce(
+      (max, item) =>
+        Number(item.amount) > Number(max.amount)
+          ? item
+          : max,
+      { amount: 0 }
+    );
+
+  const totalTransactions = transactions.length;
 
   const data = [
     {
@@ -124,17 +147,37 @@ function App() {
       console.log(error);
     }
   };
+  
+  const categoryData = transactions
+  .filter((item) => item.type === "expense")
+  .reduce((acc, item) => {
+    const existing = acc.find(
+      (c) => c.category === item.category
+    );
+
+    if (existing) {
+      existing.amount += Number(item.amount);
+    } else {
+      acc.push({
+        category: item.category,
+        amount: Number(item.amount),
+      });
+    }
+
+    return acc;
+  }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white p-6">
+    <div className="min-h-screen bg-linear-to-br from-slate-900 via-purple-900 to-slate-900">
       <div className="max-w-6xl mx-auto">
         <h1 className="text-5xl font-bold text-center mb-10">
           Expense Tracker
         </h1>
 
         {/* Dashboard Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-          <div className="bg-green-500/20 backdrop-blur-lg rounded-2xl p-6 shadow-lg border border-green-400/20">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-10">
+
+          <div className="bg-green-500/20 backdrop-blur-lg rounded-2xl p-6 shadow-lg border border-green-400/20 transition-all duration-300 hover:scale-105">
             <h2 className="text-2xl font-semibold mb-2">
               Total Income
             </h2>
@@ -163,6 +206,29 @@ function App() {
               ₹ {balance}
             </p>
           </div>
+
+          <div className="bg-blue-500/20 backdrop-blur-lg rounded-2xl p-6 shadow-lg border border-blue-400/20">
+            <h2 className="text-2xl font-semibold mb-2">
+              Savings Rate
+            </h2>
+
+            <p className="text-3xl font-bold text-blue-400">
+              {totalIncome > 0
+                ? ((balance / totalIncome) * 100).toFixed(1)
+                : 0}%
+            </p>
+          </div>
+
+          <div className="bg-yellow-500/20 backdrop-blur-lg rounded-2xl p-6 shadow-lg border border-yellow-400/20">
+            <h2 className="text-2xl font-semibold mb-2">
+              Transactions
+            </h2>
+
+            <p className="text-3xl font-bold text-yellow-400">
+              {transactions.length}
+            </p>
+          </div>
+
         </div>
 
         {/* Add Transaction Form */}
@@ -343,21 +409,14 @@ function App() {
           </div>
         )}
 
-        {/* Search */}
-        <input
-          type="text"
-          placeholder="Search transactions..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-full p-3 rounded-xl bg-white/10 border border-white/20 outline-none mb-8"
-        />
-
         {/* Analytics */}
         <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 shadow-lg border border-white/10 mb-10">
+
           <h2 className="text-3xl font-bold text-center mb-6">
-            Expense Analytics
+            Financial Overview Dashboard
           </h2>
 
+          {/* Donut Chart */}
           <div className="h-[400px]">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -365,24 +424,117 @@ function App() {
                   data={data}
                   cx="50%"
                   cy="50%"
-                  outerRadius={120}
+                  innerRadius={80}
+                  outerRadius={130}
+                  paddingAngle={5}
                   dataKey="value"
-                  label
                 >
                   {data.map((entry, index) => (
                     <Cell
-                      key={`cell-${index}`}
-                      fill={COLORS[index]}
+                      key={index}
+                      fill={COLORS[index % COLORS.length]}
                     />
                   ))}
                 </Pie>
+
+                <text
+                  x="50%"
+                  y="50%"
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  fill="white"
+                  fontSize="22"
+                  fontWeight="bold"
+                >
+                  ₹ {balance}
+                </text>
 
                 <Tooltip />
                 <Legend />
               </PieChart>
             </ResponsiveContainer>
           </div>
+
+          {/* Category Spending */}
+          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 mt-8">
+            <h2 className="text-2xl font-bold text-center mb-6">
+              Category Spending
+            </h2>
+
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={categoryData}>
+                <CartesianGrid  stroke="#ffffff20"
+                strokeDasharray="3 3" />
+                <XAxis 
+                dataKey="category"  
+                stroke="#ffffff"/>
+                <YAxis stroke="#ffffff"/>
+                <Tooltip />
+                <Bar 
+                dataKey="amount"
+                fill="#8b5cf6"
+                radius={[10,10,0,0]}
+                label={{ position: "top", fill: "white" }}
+                />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Financial Insights */}
+          <div className="bg-indigo-500/20 backdrop-blur-lg rounded-2xl p-6 mt-8">
+            <h2 className="text-2xl font-bold mb-4">
+              Financial Insights
+            </h2>
+
+            <div className="space-y-2 text-lg">
+              <p>
+                Highest Expense: ₹ {highestExpense.amount}
+              </p>
+
+              <p>
+                Category: {highestExpense.category || "N/A"}
+              </p>
+
+              <p>
+                Savings Rate: {savingsRate}%
+              </p>
+
+              <p>
+                Total Transactions: {totalTransactions}
+              </p>
+            </div>
+          </div>
+
         </div>
+
+        {/* Search + Filter */}
+
+      <div className="flex flex-col md:flex-row gap-4 mb-8">
+
+        <input
+          type="text"
+          placeholder="Search transactions..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="flex-1 p-3 rounded-xl bg-white/10 border border-white/20 outline-none"
+        />
+
+        <select
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+          className="p-3 rounded-xl bg-slate-800 border border-white/20"
+        >
+          <option value="all">All</option>
+          <option value="income">Income</option>
+          <option value="expense">Expense</option>
+          <option value="Food">Food</option>
+          <option value="Rent">Rent</option>
+          <option value="Travel">Travel</option>
+          <option value="Shopping">Shopping</option>
+          <option value="Salary">Salary</option>
+        </select>
+
+      </div>
 
         {/* Transactions */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -391,6 +543,11 @@ function App() {
               item.title
                 .toLowerCase()
                 .includes(search.toLowerCase())
+            )
+            .filter((item) =>
+              filter === "all"
+                ? true
+                : item.type === filter
             )
             .map((item) => (
               <div
